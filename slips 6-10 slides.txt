@@ -1,0 +1,1679 @@
+﻿4/13/24, 12:29 PM slips 6-10 slides
+
+In [ ]:
+
+Q.1 Attempt any TWO of the following. [10]
+(a) Draw the horizontal bar graph for the following data in Maroon colour.
+City                 Pune   Mumbai   Nasik   Nagpur   Thane
+Air Quality Index     168     190      170    178      195
+
+In [7]:
+
+import matplotlib.pyplot as plt
+air=[168,190,170,178,195]
+range=(160,200)
+bins=5
+plt.hist(air,bins,range,color='black',histtype='bar',rwidth=0.3)
+plt.xlabel('City')
+plt.ylabel('Air Quality Index')
+plt.title('Histogram Plot')
+plt.show()
+
+In [ ]:
+
+(b) Using python, generate 3D surface Plot for the function f(x) = sin(x**2+y**2) in the interv
+
+In [8]:
+
+from pylab import*
+def f(x,y):
+    return np.sin(x**2+y**2)
+x=np.linspace(0,10,30)
+y=np.linspace(0,10,30)
+X,Y=np.meshgrid(x,y)
+Z=f(X,Y)
+ax=plt.axes(projection='3d')
+ax.plot_surface(X,Y,Z)
+xlabel('x')
+ylabel('y')
+title('Surface Plot')
+show()
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 1/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+
+In [ ]:
+
+(c) Using Python, plot the graph of function f(x) = sin(x)−e^x + 3x^2 −log10(x) on the Interval
+
+In [9]:
+
+import matplotlib.pyplot as plt
+import numpy as np
+x=np.linspace(0,2*np.pi)
+f=np.sin(x)-np.exp(x)+3*x**2-np.log10(x)
+plt.plot(x,f)
+plt.show()
+
+C:\Users\siddhi\AppData\Local\Temp\ipykernel_8352\446144361.py:4: RuntimeWarn
+ing: divide by zero encountered in log10
+  f=np.sin(x)-np.exp(x)+3*x**2-np.log10(x)
+
+In [ ]:
+
+Q.2 Attempt any TWO of the following. [10]
+(a) Using python, rotate the line segment by 180◦ having end points (1, 0) and (2, −1).
+
+In [41]:
+
+from sympy import*
+
+In [11]:
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 2/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+
+S=Segment(Point(1,0),Point(2,-1))
+S.rotate(pi)
+
+Out[11]:
+
+In [ ]:
+
+(b) Write a Python program to draw a polygon with vertices (0, 0),(2, 0),(2, 3) and (1, 6) and 
+it by 180◦
+
+In [12]:
+
+A=Point(0,0)
+B=Point(2,0)
+C=Point(2,3)
+D=Point(1,6)
+P=Polygon(A,B,C,D)
+P.rotate(pi)
+
+Out[12]:
+
+In [ ]:
+
+(c) Using python, generate triangle with vertices (0, 0),(4, 0),(2, 4), check whether the trian
+isosceles triangle.
+
+In [13]:
+
+T=Triangle(Point(0,0),Point(4,0),Point(2,4))
+T.is_isosceles()
+
+Out[13]:
+
+True
+
+In [ ]:
+
+Q.3 Attempt the following.
+(a) Attempt any ONE of the following. [7]
+(i) Write a Python program to solve the following LPP:
+Max Z = x + y
+subject to 
+2x − 2y ≥ 1
+x + y ≥ 2
+x ≥ 0, y ≥ 0.
+
+In [14]:
+
+from pulp import*
+model=LpProblem(name="Lp-Problem",sense=LpMaximize)
+x=LpVariable(name='x',lowBound=0)
+y=LpVariable(name='y',lowBound=0)
+model+=(2*x-2*y>=1)
+model+=(x+y>=2)
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 3/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+model+=x+y
+model
+
+Out[14]:
+
+Lp-Problem:
+MAXIMIZE
+1*x + 1*y + 0
+SUBJECT TO
+_C1: 2 x - 2 y >= 1
+
+_C2: x + y >= 2
+
+VARIABLES
+x Continuous
+y Continuous
+
+In [15]:
+
+model.solve()
+
+Out[15]:
+
+-2
+
+In [ ]:
+
+(ii) Write a python program to display the following LPP by using pulp module and simplex
+method. Find its optimal solution if exist.
+Min Z = x + y
+subject to 
+x ≥ 6
+y ≥ 6
+x + y ≤ 11
+x ≥ 0, y ≥ 0.
+
+In [16]:
+
+from pulp import*
+model=LpProblem(name="Lp-Problem",sense=LpMinimize)
+x=LpVariable(name='x',lowBound=0)
+y=LpVariable(name='y',lowBound=0)
+model+=(x>=6)
+model+=(y>=6)
+model+=(x+y<=11)
+model+=x+y
+model
+
+Out[16]:
+
+Lp-Problem:
+MINIMIZE
+1*x + 1*y + 0
+SUBJECT TO
+_C1: x >= 6
+
+_C2: y >= 6
+
+_C3: x + y <= 11
+
+VARIABLES
+x Continuous
+y Continuous
+
+In [17]:
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 4/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+
+model.solve()
+
+Out[17]:
+
+-1
+
+In [ ]:
+
+(b) Attempt any ONE of the following. [8]
+(i) Apply Python program in each of the following transformations on the point P[4, −2]
+(I) Refection through Y−axis.
+(II) Scaling in X−coordinate by factor 7.
+(III) Shearing in Y direction by 3 units
+(IV) Reflection through the line y = −x.
+
+In [18]:
+
+P=Point(4,-2)
+
+In [19]:
+
+P.transform(Matrix([[-1,0,0],[0,1,0],[0,0,1]]))
+
+Out[19]:
+
+Point2D(−4, −2)
+
+In [20]:
+
+P.scale(7,0)
+
+Out[20]:
+
+Point2D(28, 0)
+
+In [21]:
+
+P.transform(Matrix([[1,0,0],[7,1,0],[0,0,1]]))
+
+Out[21]:
+
+Point2D(−10, −2)
+
+In [22]:
+
+x,y=symbols('x,y')
+P.reflect(Line(x+y+0))
+
+Out[22]:
+
+Point2D(2, −4)
+
+In [ ]:
+
+(ii) Find the combined transformation by using Python program for the following sequence of
+transformations:-
+(I) Rotation about origin through an angle 60◦
+(II) Scaling in X−coordinate by 7 units.
+(III) Uniform scaling by 4 units.
+(IV) Reflection through the line y = x..
+
+In [24]:
+
+S=Segment(Point(0,0),Point(2,4))
+S.rotate(pi/3)
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 5/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+S.scale(7,0)
+S.scale(4,4)
+x,y=symbols('x,y')
+S.reflect(Line(x-y+0))
+
+Out[24]:
+
+In [ ]:
+
+Q.1 Attempt any TWO of the following. [10]
+(a) Plot the graph of f(x) = x^4
+in [0, 5] with red dashed line with circle markers.
+
+In [29]:
+
+import matplotlib.pyplot as plt
+import numpy as np
+x=np.linspace(0,5,10)
+f=x**4
+plt.plot(x,f,'--r',marker='o')
+plt.show()
+
+In [ ]:
+
+(b) Using python, generate 3D surface Plot for the function f(x) = sin(x^2 + y^2)
+in the interval [0, 10].
+
+In [33]:
+
+from pylab import*
+import numpy as np
+def f(x,y):
+    return np.sin(x**2+y**2)
+x=np.linspace(0,10)
+y=np.linspace(0,10)
+X,Y=np.meshgrid(x,y)
+Z=f(X,Y)
+ax=axes(projection='3d')
+ax.plot_surface(X,Y,Z)
+xlabel('x-axis')
+ylabel("y-axis")
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 6/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+title("Surface Plot")
+show()
+
+In [ ]:
+
+(c) Write a python program to draw rectangle with vertices [1, 0], [2, 1], [1, 2] and [0, 1], i
+about the origin by π/2 radians.
+
+In [44]:
+
+R=Polygon(Point(1,0),Point(2,1),Point(1,2),Point(0,1))
+R.rotate(pi/2)
+
+Out[44]:
+
+In [ ]:
+
+(a) Write a Python program to reflect the line segment joining the points A[5, 3] & B[1, 4] thr
+line y = x + 1.
+
+In [45]:
+
+x,y=symbols('x,y')
+S=Segment(Point(5,3),Point(1,4))
+S.reflect(Line(x-y+1))
+
+Out[45]:
+
+In [ ]:
+
+(b) Using sympy declare the points P(5, 2), Q(5, −2), R(5, 0), check whether these points are c
+Declare the ray passing through the points P and Q, find the length of this ray between P and Q
+Also find slope of this ray.
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 7/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+
+In [46]:
+
+P=Point(5,2)
+Q=Point(5,-2)
+R=Point(5,0)
+Point.is_collinear(P,Q,R)
+
+Out[46]:
+
+True
+
+In [50]:
+
+R=Ray(Point(5,2),Point(5,-2))
+R.length
+
+Out[50]:
+
+∞
+
+In [51]:
+
+R.slope
+
+Out[51]:
+
+∞
+
+In [ ]:
+
+(c) Write a Python program in 3D to rotate the point (1, 0, 0) through X Plane in anticlockwise
+direction (Rotation through Z axis) by an angle of 90◦
+
+In [73]:
+
+A=Point(1,0,0)
+A.transform(Matrix([[0,1,0,0],[-1,0,0,0],[0,0,1,0],[0,0,0,1]]))
+
+Out[73]:
+
+Point3D(0, −1, 0)
+
+In [ ]:
+
+Q.3 Attempt the following.
+(a) Attempt any ONE of the following. [7]
+(i) Write a Python program to solve the following LPP:
+Min Z = 3.5x + 2y
+subject to x + y ≥ 5
+x ≥ 4
+y ≤ 2
+x ≥ 0, y ≥ 0.
+
+In [53]:
+
+from pulp import*
+model=LpProblem(name="Lp-Problem",sense=LpMinimize)
+x=LpVariable(name='x',lowBound=0)
+y=LpVariable(name='y',lowBound=0)
+model+=(x+y>=5)
+model+=(x>=4)
+model+=(y<=2)
+model+=3.5*x+2*y
+model
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 8/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+
+Out[53]:
+
+Lp-Problem:
+MINIMIZE
+3.5*x + 2*y + 0.0
+SUBJECT TO
+_C1: x + y >= 5
+
+_C2: x >= 4
+
+_C3: y <= 2
+
+VARIABLES
+x Continuous
+y Continuous
+
+In [54]:
+
+model.solve()
+
+Out[54]:
+
+1
+
+In [55]:
+
+model.objective.value()
+
+Out[55]:
+
+16.0
+
+In [56]:
+
+x.value()
+
+Out[56]:
+
+4.0
+
+In [57]:
+
+y.value()
+
+Out[57]:
+
+1.0
+
+In [ ]:
+
+(ii) Write a python program to display the following LPP by using pulp module and simplex
+method. Find its optimal solution if exist.
+Max Z = x + 2y + z
+subject to x + 2y + 2z ≤ 1
+3x + 2y + z ≥ 8
+x ≥ 0, y ≥ 0, z ≥ 0.
+
+In [58]:
+
+from pulp import*
+model=LpProblem(name="Lp-Problem",sense=LpMaximize)
+x=LpVariable(name='x',lowBound=0)
+y=LpVariable(name='y',lowBound=0)
+z=LpVariable(name='z',lowBound=0)
+model+=(x+2*y+2*z<=1)
+model+=(3*x+2*y+z>=8)
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 9/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+model+=x+2*y+z
+model
+
+Out[58]:
+
+Lp-Problem:
+MAXIMIZE
+1*x + 2*y + 1*z + 0
+SUBJECT TO
+_C1: x + 2 y + 2 z <= 1
+
+_C2: 3 x + 2 y + z >= 8
+
+VARIABLES
+x Continuous
+y Continuous
+z Continuous
+
+In [59]:
+
+model.solve()
+
+Out[59]:
+
+-1
+
+In [ ]:
+
+(b) Attempt any ONE of the following. [8]
+(i) Apply Python program in each of the following transformations on the point P[4, −2]
+(I) Refection through Y−axis.
+(II) Scaling in X−coordinate by factor 5.
+(III) Rotation about origin through an angle π/2
+(IV) Shearing in X direction by 7/2 units.
+
+In [60]:
+
+P=Point(4,-2)
+
+In [61]:
+
+P.transform(Matrix([[-1,0,0],[0,1,0],[0,0,1]]))
+
+Out[61]:
+
+Point2D(−4, −2)
+
+In [62]:
+
+P.scale(5,0)
+
+Out[62]:
+
+Point2D(20, 0)
+
+In [63]:
+
+P.rotate(pi/2)
+
+Out[63]:
+
+Point2D(2, 4)
+
+In [64]:
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 10/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+
+P.transform(Matrix([[1,7/2,0],[0,1,0],[0,0,1]]))
+
+Out[64]:
+
+Point2D(4, 12)
+
+In [ ]:
+
+(ii) Find the combined transformation of the line segment between the points A[7, −2] & B[6, 2]
+by using Python program for the following sequence of transformations:-
+(I) Rotation about origin through an angle π/3
+(II) Scaling in X− coordinate by 7 units.
+(III) Uniform scaling by −4 units.
+(IV) Reflection through the line X− axis.
+
+In [65]:
+
+A=Point(7,-2)
+B=Point(6,2)
+S=Segment(A,B)
+S.rotate(pi/3)
+S.scale(7,0)
+S.scale(-4,-4)
+points=S.points
+p=points[0]
+q=points[1]
+p1=p.transform(Matrix([[1,0,0],[0,-1,0],[0,0,1]]))
+q1=q.transform(Matrix([[1,0,0],[0,-1,0],[0,0,1]]))
+Segment(p1,q1)
+
+Out[65]:
+
+In [ ]:
+
+Q.1 Attempt any TWO of the following. [10]
+(a) Plot the graphs of sin x, cos x, e^x and x^2
+in [0, 5] in one figure with (2 × 2) subplots.
+
+In [67]:
+
+from pylab import*
+import numpy as np
+from math import*
+x=np.linspace(0,5)
+y1=np.sin(x)
+y2=np.cos(x)
+y3=np.exp(x)
+y4=x**2
+subplot(2,2,1)
+plot(x,y1,label="$ sin x $")
+legend()
+subplot(2,2,2)
+plot(x,y2,label="$ cos x $")
+legend()
+subplot(2,2,3)
+plot(x,y3,label="$ e^x $")
+legend()
+subplot(2,2,4)
+plot(x,y4,label="$ x^2 $")
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 11/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+legend()
+show()
+
+In [ ]:
+
+(b) Using Python plot the graph of function f(x) = cos(x) in the interval [0, 2π].
+
+In [68]:
+
+import matplotlib.pyplot as plt
+import numpy as np
+x=np.linspace(0,2*np.pi)
+f=np.cos(x)
+plt.plot(x,f)
+plt.show()
+
+In [ ]:
+
+(c) Write a Python program to generate 3D plot of the functions z = sin x + cos y in −10 < x, y
+
+In [69]:
+
+from pylab import*
+import numpy as np
+def f(x,y):
+    return np.sin(x)+np.cos(y)
+x=np.linspace(-10,10)
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 12/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+y=np.linspace(-10,10)
+X,Y=np.meshgrid(x,y)
+Z=f(X,Y)
+ax=axes(projection='3d')
+ax.contour3D(X,Y,Z,50)
+xlabel('x')
+ylabel('y')
+title("Countour 3D")
+show()
+
+In [ ]:
+
+(a) Write a Python program in 3D to rotate the point (1, 0, 0) through XZ Plane in anticlockwis
+direction (Rotation through Y axis) by an angle of 90◦
+
+In [72]:
+
+A=Point(1,0,0)
+A.transform(Matrix([[0,0,-1,0],[0,1,0,0],[1,0,0,0],[0,0,0,1]]))
+
+Out[72]:
+
+Point3D(0, 0, 1)
+
+In [ ]:
+
+(b) Using python, generate triangle with vertices (0, 0),(4, 0),(1, 4), check whether the trian
+Scalene triangle.
+
+In [74]:
+
+T=Triangle(Point(0,0),Point(4,0),Point(1,4))
+T.is_scalene()
+
+Out[74]:
+
+True
+
+In [ ]:
+
+(c) Write a Python program to find the area and perimeter of the ∆ABC, where A[0, 0], B[6, 0], 
+
+In [79]:
+
+T=Triangle(Point(0,0),Point(6,0),Point(4,4))
+T.area
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 13/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+
+Out[79]:
+
+12
+
+In [80]:
+
+T.perimeter
+
+Out[80]:
+
+2√5 + 4√2 + 6
+
+In [ ]:
+
+Q.3 Attempt the following.
+(a) Attempt any ONE of the following. [7]
+(i) Write a Python program to solve the following LPP:
+Max Z = 150x + 75y
+subject to
+4x + 6y ≤ 24
+5x + 3y ≤ 15
+x ≥ 0, y ≥ 0.
+
+In [83]:
+
+from pulp import*
+model=LpProblem(name='Lp-Problem',sense=LpMaximize)
+x=LpVariable(name='x',lowBound=0)
+y=LpVariable(name='y',lowBound=0)
+model+=(4*x+6*y<=24)
+model+=(5*x+3*y<=15)
+model+=150*x+75*y
+model
+
+Out[83]:
+
+Lp-Problem:
+MAXIMIZE
+150*x + 75*y + 0
+SUBJECT TO
+_C1: 4 x + 6 y <= 24
+
+_C2: 5 x + 3 y <= 15
+
+VARIABLES
+x Continuous
+y Continuous
+
+In [84]:
+
+model.solve()
+
+Out[84]:
+
+1
+
+In [85]:
+
+model.objective.value()
+
+Out[85]:
+
+450.0
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 14/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+
+In [86]:
+
+x.value()
+
+Out[86]:
+
+3.0
+
+In [87]:
+
+y.value()
+
+Out[87]:
+
+0.0
+
+In [ ]:
+
+(ii) Write a python program to display the following LPP by using pulp module and simplex
+method. Find its optimal solution if exist.
+Max Z = 3x + 5y + 4z
+subject to 
+2x + 3y ≤ 8
+2y + 5z ≤ 10
+3x + 2y + 4z ≤ 15
+x ≥ 0, y ≥ 0, z ≥ 0.
+
+In [88]:
+
+from pulp import*
+model=LpProblem(name='Lp-Problem',sense=LpMaximize)
+x=LpVariable(name='x',lowBound=0)
+y=LpVariable(name='y',lowBound=0)
+z=LpVariable(name='z',lowBound=0)
+model+=(2*x+3*y<=8)
+model+=(2*y+5*z<=10)
+model+=(3*x+2*y+4*z<=15)
+model+=3*x+5*y+4*z
+model
+
+Out[88]:
+
+Lp-Problem:
+MAXIMIZE
+3*x + 5*y + 4*z + 0
+SUBJECT TO
+_C1: 2 x + 3 y <= 8
+
+_C2: 2 y + 5 z <= 10
+
+_C3: 3 x + 2 y + 4 z <= 15
+
+VARIABLES
+x Continuous
+y Continuous
+z Continuous
+
+In [89]:
+
+model.solve()
+
+Out[89]:
+
+1
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 15/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+
+In [90]:
+
+model.objective.value()
+
+Out[90]:
+
+18.658536500000004
+
+In [91]:
+
+x.value()
+
+Out[91]:
+
+2.1707317
+
+In [92]:
+
+y.value()
+
+Out[92]:
+
+1.2195122
+
+In [93]:
+
+z.value()
+
+Out[93]:
+
+1.5121951
+
+In [ ]:
+
+(b) Attempt any ONE of the following. [8]
+(i) Apply Python program in each of the following transformations on the point P[4, −2]
+(I) Refection through Y−axis.
+(II) Scaling in X−coordinate by factor 3.
+(III) Rotation about origin through an angle π.
+(IV) Shearing in both X and Y direction by −2 and 4 units respectively.
+
+In [94]:
+
+P=Point(4,-2)
+
+In [95]:
+
+P.transform(Matrix([[-1,0,0],[0,1,0],[0,0,1]]))
+
+Out[95]:
+
+Point2D(−4, −2)
+
+In [96]:
+
+P.scale(3,0)
+
+Out[96]:
+
+Point2D(12, 0)
+
+In [97]:
+
+P.rotate(pi)
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 16/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+
+Out[97]:
+
+Point2D(−4, 2)
+
+In [98]:
+
+P.transform(Matrix([[1,-2,0],[4,1,0],[0,0,1]]))
+
+Out[98]:
+
+Point2D(−4, −10)
+
+In [ ]:
+
+(ii) Find the combined transformation of the line segment between the points A[4, −1] & B[3, 2]
+by using Python program for the following sequence of transformations:-
+(I) Rotation about origin through an angle π/4
+(II) Shearing in Y direction by 4 units.
+(III) Scaling in X− coordinate by 5 units.
+(IV) Reflection through y− axis.
+
+In [99]:
+
+A=Point(4,-1)
+B=Point(3,2)
+S=Segment(A,B)
+S.rotate(pi/4)
+points=S.points
+p=points[0]
+q=points[1]
+p1=p.transform(Matrix([[1,0,0],[4,1,0],[0,0,1]]))
+q1=q.transform(Matrix([[1,0,0],[4,1,0],[0,0,1]]))
+Segment(p1,q1)
+S.scale(5,0)
+p1=p.transform(Matrix([[-1,0,0],[0,1,0],[0,0,1]]))
+q1=q.transform(Matrix([[-1,0,0],[0,1,0],[0,0,1]]))
+Segment(p1,q1)
+
+Out[99]:
+
+In [ ]:
+
+Q.1 Attempt any TWO of the following. [10]
+(a) Write a python program to Plot 2DX-axis and Y-axis black color and in the same diagram plot
+green triangle with vertices [5, 4], [7, 4], [6, 6].
+
+In [1]:
+
+import matplotlib.pyplot as plt
+x=[5,7,6,5]
+y=[4,4,6,4]
+plt.plot(x,y,'black')
+plt.fill(x,y,color='green')
+
+Out[1]:
+
+[<matplotlib.patches.Polygon at 0x21d30bbdb10>]
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 17/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+
+In [ ]:
+
+(b) Write a program in python to rotate the point through YZ-plane in anticlockwise direction. 
+tation through Y-axis by an angle of 90◦.)
+
+In [35]:
+
+from sympy import*
+import numpy as np
+
+In [3]:
+
+A=Point(1,0,0)
+A.transform(Matrix([[1,0,0,0],[0,0,-1,0],[0,1,0,0],[0,0,0,1]]))
+
+Out[3]:
+
+Point3D(1, 0, 0)
+
+In [ ]:
+
+(c) Using Python plot the graph of function f(x) = cos(x) on the interval [0, 2π].
+
+In [4]:
+
+import matplotlib.pyplot as plt
+import numpy as np
+x=np.linspace(0,2*np.pi)
+f=np.cos(x)
+plt.plot(x,f)
+plt.show()
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 18/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+
+In [ ]:
+
+Q.2 Attempt any TWO of the following. [10]
+(a) Write a python program to rotate the ray by 90◦ having starting point (1, 0) and (2, −1).
+
+In [5]:
+
+R=Ray(Point(1,0),Point(2,-1))
+R.rotate(pi/2)
+
+Out[5]:
+
+In [ ]:
+
+(b) Using sympy, declare the points A(0, 7), B(5, 2). Declare the line segment passing through 
+Find the length and midpoint of the line segment passing through points A and B.
+
+In [8]:
+
+A=Point(0,7)
+B=Point(5,2)
+S=Segment(A,B)
+
+In [9]:
+
+S.length
+
+Out[9]:
+
+5√2
+
+In [10]:
+
+S.midpoint
+
+Out[10]:
+
+5
+Point2D( 9
+
+, )
+2 2
+
+In [ ]:
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 19/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+
+(c) Write a python program to find the area and perimeter of ∆ABC where A(0, 0), B(5, 0), C(3, 
+
+In [11]:
+
+A=Point(0,0)
+B=Point(5,0)
+C=Point(3,3)
+T=Triangle(A,B,C)
+
+In [12]:
+
+T.area
+
+Out[12]:
+15
+2
+
+In [13]:
+
+T.perimeter
+
+Out[13]:
+
+√13 + 3√2 + 5
+
+In [ ]:
+
+Q.3 Attempt the following.
+(a) Attempt any ONE of the following. [7]
+(i) Write a Python program to solve the following LPP:
+Max Z = 150x + 75y
+subject to 4x + 6y ≤ 24
+5x + 3y ≤ 15
+x ≥ 0, y ≥ 0.
+
+In [14]:
+
+from pulp import*
+model=LpProblem(name="Lp-Problem",sense=LpMaximize)
+x=LpVariable(name='x',lowBound=0)
+y=LpVariable(name='y',lowBound=0)
+model+=(4*x+6*y<=24)
+model+=(5*x+3*y<=15)
+model+=150*x+75*y
+model
+
+Out[14]:
+
+Lp-Problem:
+MAXIMIZE
+150*x + 75*y + 0
+SUBJECT TO
+_C1: 4 x + 6 y <= 24
+
+_C2: 5 x + 3 y <= 15
+
+VARIABLES
+x Continuous
+y Continuous
+
+In [15]:
+
+model.solve()
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 20/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+
+Out[15]:
+
+1
+
+In [16]:
+
+model.objective .value()
+
+Out[16]:
+
+450.0
+
+In [17]:
+
+x.value()
+
+Out[17]:
+
+3.0
+
+In [18]:
+
+y.value()
+
+Out[18]:
+
+0.0
+
+In [ ]:
+
+(ii) Write a python program to display the following LPP by using pulp module and simplex
+method. Find its optimal solution if exist.
+Max Z = 4x + y + 3z + 5w
+subject to 4x + 6y − 5z − 4w ≥ 20
+−3x − 2y + 4z + w ≤ 10
+−8x − 3y + 3z + 2w ≤ 20
+x ≥ 0, y ≥ 0, z ≥ 0, w ≥ 0.
+
+In [19]:
+
+from pulp import*
+model=LpProblem(name="Lp-Problem",sense=LpMaximize)
+x=LpVariable(name='x',lowBound=0)
+y=LpVariable(name='y',lowBound=0)
+z=LpVariable(name='z',lowBound=0)
+w=LpVariable(name='w',lowBound=0)
+model+=(4*x+6*y-5*z-4*w>=20)
+model+=(-3*x-2*y+4*z+w<=10)
+model+=(-8*x-3*y+3*z+2*w<=20)
+model+=4*x+y+3*z+5*w
+model
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 21/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+
+Out[19]:
+
+Lp-Problem:
+MAXIMIZE
+5*w + 4*x + 1*y + 3*z + 0
+SUBJECT TO
+_C1: - 4 w + 4 x + 6 y - 5 z >= 20
+
+_C2: w - 3 x - 2 y + 4 z <= 10
+
+_C3: 2 w - 8 x - 3 y + 3 z <= 20
+
+VARIABLES
+w Continuous
+x Continuous
+y Continuous
+z Continuous
+
+In [20]:
+
+model.solve()
+
+Out[20]:
+
+-2
+
+In [ ]:
+
+(b) Attempt any ONE of the following. [8]
+(i) Write a python program to apply the following transformations on the point (−2, 4) :
+(I) Shearing in Y direction by 7 units.
+(II) Scaling in X and Y direction by 7/2 and 7 units respectively.
+(III) Shearing in X and Y direction by 4 and 7 units respectively.
+(IV) Rotation about origin by an angle 60◦
+
+In [21]:
+
+P=Point(-2,4)
+
+In [22]:
+
+P.transform(Matrix([[1,0,0],[7,1,0],[0,0,1]]))
+
+Out[22]:
+
+Point2D(26, 4)
+
+In [23]:
+
+P.scale(7/2,7)
+
+Out[23]:
+
+Point2D(−7, 28)
+
+In [25]:
+
+P.transform(Matrix([[1,4,0],[7,1,0],[0,0,1]]))
+
+Out[25]:
+
+Point2D(26, −4)
+
+In [26]:
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 22/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+
+P.rotate(pi/3)
+
+Out[26]:
+
+Point2D(−2√3 − 1, 2 − √3)
+
+In [ ]:
+
+(ii) Write a python program to find the combined transformation of the line segment between the
+points A[5, 3] & B[1, 4] for the following sequence of transformations:
+(I) Rotate about origin through an angle π/2
+(II) Uniform scaling by −3.5 units.
+(III) Scaling in Y− axis by 5 units.
+(IV) Shearing in X and Y direction by 3 and 4 units respectively.
+
+In [27]:
+
+A=Point(5,3)
+B=Point(1,4)
+S=Segment(A,B)
+S.rotate(pi/2)
+S.scale(-3.5,-3.5)
+S.scale(0,5)
+points=S.points
+p=points[0]
+q=points[1]
+p1=p.transform(Matrix([[1,3,0],[4,1,0],[0,0,1]]))
+q1=q.transform(Matrix([[1,3,0],[4,1,0],[0,0,1]]))
+Segment(p1,q1)
+
+Out[27]:
+
+In [ ]:
+
+ 
+
+In [ ]:
+
+Q.1 Attempt any TWO of the following. [10]
+(a) Write a python program in 3D to rotate the point (1, 0, 0) through XY plane in clockwise di
+(Rotation through Z-Axis by an angle of 90◦)
+
+In [28]:
+
+Q=Point(1,0,0)
+Q.transform(Matrix([[0,-1,0,0],[1,0,0,0],[0,0,1,0],[0,0,0,1]]))
+
+Out[28]:
+
+Point3D(0, 1, 0)
+
+In [ ]:
+
+(b) Represent the following information using a bar graph (in green color )
+Item               clothing   Food   rent   Petrol   Misc.
+expenditure in Rs     600     4000   2000    1500     700
+
+In [30]:
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 23/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+
+import matplotlib.pyplot as plt
+length=[1,2,3,4,5]
+height=[600,4000,2000,1500,700]
+tick_label=['Clothing','Food','Rent','Petrol','Misc..']
+plt.bar(length,height,tick_label=tick_label,width=0.3,color=['green'])
+plt.xlabel('x-axis')
+plt.ylabel('y-axis')
+plt.title('Bar Graph')
+plt.show()
+
+In [ ]:
+
+(c) Write a python program to plot the 3D line graph whose parametric equation is (cos(2x),sin(
+for 10 ≤ x ≤ 20 (in red color ), with title to the graph.
+
+In [31]:
+
+from pylab import*
+import numpy as np
+x=np.linspace(10,20)
+f=np.cos(2*x)
+g=np.sin(2*x)
+h=x
+plot(x,f,color='red')
+plot(x,g,color='red')
+plot(x,h,color='red')
+show()
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 24/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+
+In [ ]:
+
+Q.2 Attempt any TWO of the following. [10]
+(a) Write a python program to rotate the ∆ABC by 90◦ where A(1, 1), B(2, −2), C(1, 2).
+
+In [33]:
+
+A=Point(1,1)
+B=Point(2,-2)
+C=Point(1,2)
+T=Triangle(A,B,C)
+T.rotate(pi/2)
+
+Out[33]:
+
+In [ ]:
+
+(b) Draw a polygon with vertices (0, 0),(2, 0),(2, 3),(1, 6). Write a python program to rotate 
+polygon by 180◦
+
+In [37]:
+
+P=Polygon(Point(0,0),Point(2,0),Point(2,3),Point(1,6))
+P
+
+Out[37]:
+
+In [38]:
+
+P.rotate(pi)
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 25/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+
+Out[38]:
+
+In [ ]:
+
+(c) Find the area and perimeter of the ∆ABC, where A[0, 0], B[5, 0], C[3, 3].
+
+In [40]:
+
+A=Point(0,0)
+B=Point(5,0)
+C=Point(3,3)
+T=Triangle(A,B,C)
+T.area
+
+Out[40]:
+15
+2
+
+In [41]:
+
+T.perimeter
+
+Out[41]:
+
+√13 + 3√2 + 5
+
+In [ ]:
+
+Q.3 Attempt the following.
+(a) Attempt any ONE of the following. [7]
+(i) Solve LPP by using python:
+Max Z = x + y
+subject to x − y ≥ 1
+x + y ≥ 2
+x ≥ 0, y ≥ 0.
+
+In [42]:
+
+from pulp import*
+model=LpProblem(name="Lp-Problem",sense=LpMaximize)
+x=LpVariable(name='x',lowBound=0)
+y=LpVariable(name='y',lowBound=0)
+model+=(x-y>=1)
+model+=(x+y>=2)
+model+=x+y
+model
+
+Out[42]:
+
+Lp-Problem:
+MAXIMIZE
+1*x + 1*y + 0
+SUBJECT TO
+_C1: x - y >= 1
+
+_C2: x + y >= 2
+
+VARIABLES
+x Continuous
+y Continuous
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 26/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+
+In [43]:
+
+model.solve()
+
+Out[43]:
+
+-2
+
+In [ ]:
+
+(ii) Write a python program to display the following LPP by using pulp module and simplex
+method. Find its optimal solution if exist.
+Max Z = 3x + 2y + 5z
+subject to x + 2y + z ≤ 430
+3x + 4z ≤ 460
+x + 4y ≤ 120
+x ≥ 0, y ≥ 0, z ≥ 0.
+
+In [44]:
+
+from pulp import*
+model=LpProblem(name="Lp-Problem",sense=LpMaximize)
+x=LpVariable(name='x',lowBound=0)
+y=LpVariable(name='y',lowBound=0)
+z=LpVariable(name='z',lowBound=0)
+model+=(x+2*y+z<=430)
+model+=(3*x+4*z<=460)
+model+=(x+4*y<=120)
+model+=3*x+2*y+5*z
+model
+
+Out[44]:
+
+Lp-Problem:
+MAXIMIZE
+3*x + 2*y + 5*z + 0
+SUBJECT TO
+_C1: x + 2 y + z <= 430
+
+_C2: 3 x + 4 z <= 460
+
+_C3: x + 4 y <= 120
+
+VARIABLES
+x Continuous
+y Continuous
+z Continuous
+
+In [45]:
+
+model.solve()
+
+Out[45]:
+
+1
+
+In [46]:
+
+model.objective.value()
+
+Out[46]:
+
+635.0
+
+In [47]:
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 27/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+
+x.value()
+
+Out[47]:
+
+0.0
+
+In [48]:
+
+y.value()
+
+Out[48]:
+
+30.0
+
+In [49]:
+
+z.value()
+
+Out[49]:
+
+115.0
+
+In [ ]:
+
+(b) Attempt any ONE of the following. [8]
+(i) Write a python program to apply the following transformations on the point (−2, 4) :
+(I) Refection through X−axis.
+(II) Scaling in X−coordinate by factor 6.
+(III) Shearing in X direction by 4 units.
+(IV) Rotate about origin through an angle 30◦
+
+In [50]:
+
+P=Point(-2,4)
+
+In [51]:
+
+P.transform(Matrix([[1,0,0],[0,-1,0],[0,0,1]]))
+
+Out[51]:
+
+Point2D(−2, −4)
+
+In [52]:
+
+P.scale(6,0)
+
+Out[52]:
+
+Point2D(−12, 0)
+
+In [53]:
+
+P.transform(Matrix([[1,4,0],[0,1,0],[0,0,1]]))
+
+Out[53]:
+
+Point2D(−2, −4)
+
+In [54]:
+
+P.rotate(pi/6)
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 28/29
+
+
+
+4/13/24, 12:29 PM slips 6-10 slides
+
+Out[54]:
+
+Point2D(−2 − √3, −1 + 2√3)
+
+In [ ]:
+
+(ii) Write a python program to find the combined transformation between the points for the
+following sequence of transformations:-
+(I) Rotation about origin through an angle π/2
+(II) Uniform scaling by 3.5 units.
+(III) Scaling in X & Y coordinate by 3 & 5 units respectively.
+(IV) Shearing in X direction by 6 units.
+
+In [55]:
+
+A=Point(5,3)
+B=Point(1,4)
+S=Segment(A,B)
+S.rotate(pi/2)
+S.scale(3.5,3.5)
+S.scale(3,5)
+points=S.points
+p=points[0]
+q=points[1]
+p1=p.transform(Matrix([[1,6,0],[0,1,0],[0,0,1]]))
+q1=q.transform(Matrix([[1,6,0],[0,1,0],[0,0,1]]))
+Segment(p1,q1)
+
+Out[55]:
+
+In [ ]:
+
+ 
+
+file:///C:/Users/siddhi/Downloads/slips 6-10.slides.html#/ 29/29

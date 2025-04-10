@@ -1,0 +1,1918 @@
+﻿4/14/24, 8:09 PM slips 21-25 slides
+
+In [ ]:
+
+Q.1 Attempt any TWO of the following. [10]
+(a) Write a Python program to plot 2D graph of the function f(x) = x^4
+in [0, 5] with red dashed line with circle markers.
+
+In [2]:
+
+import matplotlib.pyplot as plt
+import numpy as np
+x=np.linspace(0,5,10)
+f=x**4
+plt.plot(x,f,'--r',marker='o')
+plt.show()
+
+In [ ]:
+
+(b) Write a Python program to generate 3D plot of the function z = x^2 + y^2
+in −6 < x, y < 6.
+
+In [3]:
+
+from pylab import*
+import numpy as np
+def f(x,y):
+    return x**2+y**2
+x=np.linspace(-6,6)
+y=np.linspace(-6,6)
+X,Y=np.meshgrid(x,y)
+Z=f(X,Y)
+ax=axes(projection='3d')
+ax.contour3D(X,Y,Z,50)
+xlabel('x-axis')
+ylabel('y-axis')
+show()
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 1/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+In [ ]:
+
+(c) Write a Python program to plot the 3D graph of the function f(x) = e^(x^2+y^2)
+for x, y ∈ [0, 2π] using wireframe.
+
+In [6]:
+
+from pylab import*
+import numpy as np
+def f(x,y):
+    return np.exp(x**2+y**2)
+x=np.linspace(0,2*np.pi,30)
+y=np.linspace(0,2*np.pi,30)
+X,Y=np.meshgrid(x,y)
+Z=f(X,Y)
+fig=plt.figure()
+ax=axes(projection='3d')
+ax.plot_wireframe(X,Y,Z)
+xlabel('x-axis')
+ylabel('y-axis')
+show()
+
+In [ ]:
+
+Q.2 Attempt any TWO of the following. [10]
+(a) If the line segment joining the points A[2, 5] and B[4, −13] is transformed to the line seg
+by the transformation matrix [T] = [[2 3],[4 1]]
+then using python find the slope and midpoint of the transformed line.
+
+In [85]:
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 2/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+from sympy import*
+
+In [13]:
+
+A=Point(2,5)
+B=Point(4,-13)
+A1=A.transform(Matrix([[2,3,0],[4,1,0],[0,0,1]]))
+B1=B.transform(Matrix([[2,3,0],[4,1,0],[0,0,1]]))
+S=Segment(A1,B1)
+
+In [14]:
+
+S.slope
+
+Out[14]:
+3
+
+17
+
+In [15]:
+
+S.midpoint
+
+Out[15]:
+
+Point2D(−10, 5)
+
+In [ ]:
+
+(b) Write a python program to plot square with vertices at [4, 4], [2, 4], [2, 2], [4, 2] and f
+expansion by factor 3, uniform reduction by factor 0.4.
+
+In [17]:
+
+P=Polygon(Point(4,4),Point(2,4),Point(2,2),Point(4,2))
+
+In [18]:
+
+P.scale(3,3)
+
+Out[18]:
+
+In [19]:
+
+P.scale(-0.4,-0.4)
+
+Out[19]:
+
+In [ ]:
+
+(c) Write a Python program to find the equation of the transformed line if shearing is applied 
+line 2x + y = 3 in x and y direction by 2 and -3 units respectively.
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 3/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+In [21]:
+
+x,y=symbols('x,y')
+L=Line(2*x+y-3)
+points=L.points
+p=points[0]
+q=points[1]
+p1=p.transform(Matrix([[1,-3,0],[2,1,0],[0,0,1]]))
+q1=q.transform(Matrix([[1,-3,0],[2,1,0],[0,0,1]]))
+l1=Line(p1,q1)
+l1.equation()
+
+Out[21]:
+
+5x − 3y − 21
+
+In [ ]:
+
+Q.3 Attempt the following.
+(a) Attempt any ONE of the following. [7]
+i. Write a Python program to solve the following LPP:
+Min Z = 4x + 2y
+subject to x + y ≤ 3
+x − y ≥ 2
+x ≥ 0, y ≥ 0.
+
+In [22]:
+
+from pulp import*
+model=LpProblem(name='Lp-Problem',sense=LpMinimize)
+x=LpVariable(name='x',lowBound=0)
+y=LpVariable(name='y',lowBound=0)
+model+=(x+y<=3)
+model+=(x-y>=2)
+model+=4*x+2*y
+model
+
+Out[22]:
+
+Lp-Problem:
+MINIMIZE
+4*x + 2*y + 0
+SUBJECT TO
+_C1: x + y <= 3
+
+_C2: x - y >= 2
+
+VARIABLES
+x Continuous
+y Continuous
+
+In [23]:
+
+model.solve()
+
+Out[23]:
+
+1
+
+In [24]:
+
+model.objective.value()
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 4/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+Out[24]:
+
+8.0
+
+In [25]:
+
+x.value()
+
+Out[25]:
+
+2.0
+
+In [26]:
+
+y.value()
+
+Out[26]:
+
+0.0
+
+In [ ]:
+
+ii. Write a Python program to solve the following LPP:
+Max Z = 2x + 4y
+subject to 2x + y ≤ 18
+2x + 2y ≥ 30
+x + 2y = 26
+x ≥ 0, y ≥ 0.
+
+In [55]:
+
+from pulp import*
+model=LpProblem(name='Lp-Problem',sense=LpMaximize)
+x=LpVariable(name='x',lowBound=0)
+y=LpVariable(name='y',lowBound=0)
+model+=(2*x+y<=18)
+model+=(2*x+2*y>=30)
+model+=(x+2*y==26)
+model+=2*x+4*y
+model
+
+Out[55]:
+
+Lp-Problem:
+MAXIMIZE
+2*x + 4*y + 0
+SUBJECT TO
+_C1: 2 x + y <= 18
+
+_C2: 2 x + 2 y >= 30
+
+_C3: x + 2 y = 26
+
+VARIABLES
+x Continuous
+y Continuous
+
+In [56]:
+
+model.solve()
+
+Out[56]:
+
+-1
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 5/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+In [ ]:
+
+(b) Attempt any ONE of the following. [8]
+i. Apply the following transformations on the point P[−2, 4].
+I. Reflection through line 3x + 4y = 5.
+II. Scaling in X coordinate by factor 6.
+III. Scaling in Y coordinate by factor 4.1.
+IV. Reflection through line y = 2x + 3.
+
+In [29]:
+
+P=Point(-2,4)
+
+In [30]:
+
+x,y=symbols('x,y')
+P.reflect(Line(3*x+4*y-5))
+
+Out[30]:
+
+16 12
+Point2D(− , )
+
+5 5
+
+In [31]:
+
+P.scale(6,0)
+
+Out[31]:
+
+Point2D(−12, 0)
+
+In [32]:
+
+P.scale(0,4.1)
+
+Out[32]:
+
+8
+Point2D( 2
+
+0, )
+5
+
+In [33]:
+
+x,y=symbols('x,y')
+P.reflect(Line(2*x-y+3))
+
+Out[33]:
+
+Point2D(2, 2)
+
+In [ ]:
+
+ii. Apply the following transformations on the point P[−2, 4].
+I. Shearing in Y direction by 7 units.
+II. Scaling in both X and Y direction by 4 and 7 units respectively.
+III. Rotation about origin by an angle 48 degrees.
+IV. Reflection through line y = x.
+
+In [34]:
+
+P=Point(-2,4)
+
+In [35]:
+
+P.transform(Matrix([[1,7,0],[0,1,0],[0,0,1]]))
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 6/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+Out[35]:
+
+Point2D(−2, −10)
+
+In [36]:
+
+P.scale(4,7)
+
+Out[36]:
+
+Point2D(−8, 28)
+
+In [37]:
+
+angle=radians(48)
+P.rotate(angle)
+
+Out[37]:
+
+431084051462729 929869355063
+Point2D(− , )
+
+100000000000000 781250000000
+
+In [38]:
+
+x,y=symbols('x,y')
+P.reflect(Line(x-y+0))
+
+Out[38]:
+
+Point2D(4, −2)
+
+In [ ]:
+
+ 
+
+In [ ]:
+
+Q.1 Attempt any TWO of the following. [10]
+(a) Write a python program to draw 2D plot y = log(x^2) + sin(x) with suitable label 
+in the x axis , y axis and a title in [−5π, 5π].
+
+In [41]:
+
+import matplotlib.pyplot as plt
+import numpy as np
+x=np.linspace(-5*np.pi,5*np.pi)
+y=np.log(x**2)+np.sin(x)
+plt.plot(x,y,label='$log(x^2)+sin(x)$')
+plt.xlabel('X-axis')
+plt.ylabel('Y-axis')
+plt.title('graph of function $log(x^2)+sin(x)$')
+plt.show()
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 7/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+In [ ]:
+
+(b) Write a python program to Plot 3D dimensional Contour plot of parabola z = x^2 + y^2
+ −6 <x, y < 6.
+
+In [42]:
+
+from pylab import*
+def f(x,y):
+    return x**2+y**2
+x=np.linspace(-6,6)
+y=np.linspace(-6,6)
+X,Y=np.meshgrid(x,y)
+Z=f(X,Y)
+ax=axes(projection='3d')
+ax.contour3D(X,Y,Z,50)
+xlabel('x-axis')
+ylabel('y-axis')
+show()
+
+In [ ]:
+
+(c) Write a python program to draw 2D plot y = x sin( 1/x^2 ) in [−5, 5] with suitable label in
+the x axis, y axis, a title and location of legend to lower right corner.
+
+In [47]:
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 8/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+import matplotlib.pyplot as plt
+import numpy as np
+x=np.linspace(-5,5)
+y=x*np.sin(1/x**2)
+plt.plot(x,y,label="$xsin(1/x^2)$")
+plt.xlabel('X-axis')
+plt.ylabel('Y-axis')
+plt.title('graph of function $xsin(1/x^2)$')
+legend(loc=4)
+plt.show()
+
+In [ ]:
+
+Q.2 Attempt any TWO of the following. [10]
+(a) Write a python program to find the angle at each vertices of the triangle ABC where A[0, 0]
+and C[0, 2].
+
+In [48]:
+
+A=Point(0,0)
+B=Point(2,2)
+C=Point(0,2)
+T=Triangle(A,B,C)
+
+In [49]:
+
+T.angles[A]
+
+Out[49]:
+π
+
+4
+
+In [50]:
+
+T.angles[B]
+
+Out[50]:
+π
+
+4
+
+In [51]:
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 9/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+T.angles[C]
+
+Out[51]:
+π
+
+2
+
+In [ ]:
+
+(b) Write a Python program to Reflect the Point P[3, 6] through the line x − 2y + 4 = 0.
+
+In [52]:
+
+P=Point(3,6)
+x,y=symbols('x,y')
+P.reflect(Line(x-2*y+4))
+
+Out[52]:
+
+Point2D(5, 2)
+
+In [ ]:
+
+(c) Write a Python program to find area and perimeter of the triangle ABC where A[0, 0], B[5, 0
+
+In [53]:
+
+A=Point(0,0)
+B=Point(5,0)
+C=Point(3,3)
+T=Triangle(A,B,C)
+T.area
+
+Out[53]:
+15
+2
+
+In [54]:
+
+T.perimeter
+
+Out[54]:
+
+√13 + 3√2 + 5
+
+In [ ]:
+
+Q.3 Attempt the following.
+(a) Attempt any ONE of the following. [7]
+i. Write a Python program to solve the following LPP:
+Max Z = 4x + y + 3z + 5w
+subject to 4x + 6y − 5z − 4w ≥ −20
+−3x − 2y + 4z + w ≤ 10
+−8x − 3y + 3z + 2w ≤ 20
+x, y, z, w ≥ 0.
+
+In [57]:
+
+from pulp import*
+model=LpProblem(name='Lp-Problem',sense=LpMaximize)
+x=LpVariable(name='x',lowBound=0)
+y=LpVariable(name='y',lowBound=0)
+z=LpVariable(name='z',lowBound=0)
+w=LpVariable(name='w',lowBound=0)
+model+=(4*x+6*y-5*z-4*w>=-20)
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 10/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+model+=(-3*x-2*y+4*z+w<=10)
+model+=(-8*x-3*y+3*z+2*w<=20)
+model+=4*x+y+3*z+5*w
+model
+
+Out[57]:
+
+Lp-Problem:
+MAXIMIZE
+5*w + 4*x + 1*y + 3*z + 0
+SUBJECT TO
+_C1: - 4 w + 4 x + 6 y - 5 z >= -20
+
+_C2: w - 3 x - 2 y + 4 z <= 10
+
+_C3: 2 w - 8 x - 3 y + 3 z <= 20
+
+VARIABLES
+w Continuous
+x Continuous
+y Continuous
+z Continuous
+
+In [58]:
+
+model.solve()
+
+Out[58]:
+
+-2
+
+In [ ]:
+
+ii. Write a Python program to solve the following LPP:
+Min Z = x + y
+subject to x + y ≤ 11
+x ≥ 6
+y ≥ 6
+x ≥ 0, y ≥ 0.
+
+In [59]:
+
+from pulp import*
+model=LpProblem(name='Lp-Problem',sense=LpMinimize)
+x=LpVariable(name='x',lowBound=0)
+y=LpVariable(name='y',lowBound=0)
+model+=(x+y<=11)
+model+=(x>=6)
+model+=(y>=6)
+model+=x+y
+model
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 11/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+Out[59]:
+
+Lp-Problem:
+MINIMIZE
+1*x + 1*y + 0
+SUBJECT TO
+_C1: x + y <= 11
+
+_C2: x >= 6
+
+_C3: y >= 6
+
+VARIABLES
+x Continuous
+y Continuous
+
+In [60]:
+
+model.solve()
+
+Out[60]:
+
+-1
+
+In [ ]:
+
+(b) Attempt any ONE of the following. [8]
+i. Write the Python program for each of the following.
+I. Rotate the point (1, 1) about (1, 4) through angle π/2.
+II. Find Distance Between two points (0, 0) and (1, 0)
+III. Find the shearing of the point (3, 4) in X direction by 3 units.
+IV. Represent two dimensional points using point function (−2, 5).
+
+In [67]:
+
+P=Line(Point(1,1),Point(1,4))
+P.rotate(pi/2)
+
+Out[67]:
+
+In [68]:
+
+P=Point(0,0)
+Q=Point(1,0)
+P.distance(Q)
+
+Out[68]:
+
+1
+
+In [69]:
+
+P=Point(3,4)
+P.transform(Matrix([[1,0,0],[3,1,0],[0,0,1]]))
+
+Out[69]:
+
+Point2D(15, 4)
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 12/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+In [70]:
+
+A=Point(-2,5)
+A
+
+Out[70]:
+
+Point2D(−2, 5)
+
+In [ ]:
+
+ii. A Company has 3 production facilities S1, S2 and S3 with production capacity of 7, 9 and
+18 units (in 100’s) per week of a product, respectively. These units are to be shipped to 4
+warehouses D1, D2, D3 and D4 with requirement of 5, 6, 7 and 14 units (in 100’s) per week,
+respectively. The transportation costs (in rupees) per unit between factories to warehouses
+are given in the table below.
+        D1  D2  D3  D4  Supply
+S1      19  30  50  10    7
+S2      70  30  40  60    9
+S3      40  8   70  20    18
+Demand  5   8   7   14    34
+Write a Python programme to solve transportation problem for minimize the costs of whole
+operation.
+
+In [77]:
+
+from pulp import*
+company=["S1","S2","S3"]
+supply={"S1":7,"S2":9,"S3":18}
+warehouse=["1","2","3","4"]
+demand={"1":5,"2":8,"3":7,"4":14}
+costs={"S1":{"1":19,"2":30,"3":50,"4":10},"S2":{"1":70,"2":30,"3":40,"4":60},
+       "S3":{"1":40,"2":8,"3":70,"4":20}}
+prob=LpProblem("Transportation",LpMinimize)
+Routes=[(w,r) for w in company for r in warehouse]
+vars=LpVariable.dicts("Route",(company,warehouse),0,None,LpInteger)
+prob+=lpSum([vars[w][r]*costs[w][r] for (w,r) in Routes]),"Sum_of_costs"
+for w in company:
+    prob+=lpSum([vars[w][r] for r in warehouse])<=supply[w],"Sum_Prod%s"%w
+for r in warehouse:
+    prob+=lpSum([vars[w][r] for w in company])>=demand[r],"Sum_Prod%s"%r
+prob.writeLP
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 13/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+Out[77]:
+
+<bound method LpProblem.writeLP of Transportation:
+MINIMIZE
+19*Route_S1_1 + 30*Route_S1_2 + 50*Route_S1_3 + 10*Route_S1_4 + 70*Route_S2_1 + 
+30*Route_S2_2 + 40*Route_S2_3 + 60*Route_S2_4 + 40*Route_S3_1 + 8*Route_S3_2 + 
+70*Route_S3_3 + 20*Route_S3_4 + 0
+SUBJECT TO
+Sum_ProdS1: Route_S1_1 + Route_S1_2 + Route_S1_3 + Route_S1_4 <= 7
+
+Sum_ProdS2: Route_S2_1 + Route_S2_2 + Route_S2_3 + Route_S2_4 <= 9
+
+Sum_ProdS3: Route_S3_1 + Route_S3_2 + Route_S3_3 + Route_S3_4 <= 18
+
+Sum_Prod1: Route_S1_1 + Route_S2_1 + Route_S3_1 >= 5
+
+Sum_Prod2: Route_S1_2 + Route_S2_2 + Route_S3_2 >= 8
+
+Sum_Prod3: Route_S1_3 + Route_S2_3 + Route_S3_3 >= 7
+
+Sum_Prod4: Route_S1_4 + Route_S2_4 + Route_S3_4 >= 14
+
+VARIABLES
+0 <= Route_S1_1 Integer
+0 <= Route_S1_2 Integer
+0 <= Route_S1_3 Integer
+0 <= Route_S1_4 Integer
+0 <= Route_S2_1 Integer
+0 <= Route_S2_2 Integer
+0 <= Route_S2_3 Integer
+0 <= Route_S2_4 Integer
+0 <= Route_S3_1 Integer
+0 <= Route_S3_2 Integer
+0 <= Route_S3_3 Integer
+0 <= Route_S3_4 Integer
+>
+
+In [78]:
+
+value(prob.objective)
+
+In [ ]:
+
+ 
+
+In [ ]:
+
+Q.1 Attempt any TWO of the following. [10]
+(a) Write a python program plot the graphs of sin x,and cos x in [0, π] in one figure with 2×1 
+
+In [80]:
+
+import matplotlib.pyplot as plt
+import numpy as np
+x=np.linspace(0,np.pi)
+a=np.sin(x)
+b=np.cos(x)
+subplot(2,1,1)
+plt.plot(x,a,label='$sin(x)$')
+legend()
+subplot(2,1,2)
+plt.plot(x,b,label='$cos(x)$')
+legend()
+show()
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 14/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+In [ ]:
+
+(b) Write a python program to Plot the graph of the following functions in the given interval.
+i. f(x) = x^3  in [0, 5].
+ii. f(x) = x^2 in [−2, 2].
+
+In [82]:
+
+import matplotlib.pyplot as plt
+import numpy as np
+x=np.linspace(0,5)
+y=np.linspace(-2,2)
+a=x**3
+b=x**2
+plt.plot(x,a,label='$x^3$')
+legend()
+plt.plot(y,b,label='$x^2$')
+legend()
+show()
+
+In [ ]:
+
+(c) Write a python program to plot 3D Surface Plot of the function z = cos(|x|+|y|) in −1 < x, 
+
+In [83]:
+
+from pylab import*
+def f(x,y):
+    return np.cos(np.abs(x)+np.abs(y))
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 15/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+x=np.linspace(-1,1)
+y=np.linspace(-1,1)
+X,Y=np.meshgrid(x,y)
+Z=f(X,Y)
+ax=axes(projection='3d')
+ax.plot_surface(X,Y,Z)
+xlabel('x-axis')
+ylabel('y-axis')
+show()
+
+In [ ]:
+
+Q.2 Attempt any TWO of the following. [10]
+(a) Write a Python program to draw regular polygon with 20 sides and radius 1 centered at (0, 0
+
+In [87]:
+
+P=Polygon((0,0),1,n=20)
+P
+
+Out[87]:
+
+In [ ]:
+
+(b) Write a Python program to draw a polygon with vertices (0, 0),(1, 0),(2, 2),(1, 4). Also fi
+of polygon.
+
+In [88]:
+
+P=Polygon((0,0),(1,0),(2,2),(1,4))
+P
+
+Out[88]:
+
+In [89]:
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 16/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+P.area
+
+Out[89]:
+
+4
+
+In [90]:
+
+P.perimeter
+
+Out[90]:
+
+1 + √17 + 2√5
+
+In [ ]:
+
+(c) Write a Python program to find area and perimeter of triangle ABC where A[0, 1], B[−5, 0] a
+C[−3, 3].
+
+In [91]:
+
+A=Point(0,1)
+B=Point(-5,0)
+C=Point(-3,3)
+T=Triangle(A,B,C)
+T.area
+
+Out[91]:
+13
+
+−
+2
+
+In [92]:
+
+T.perimeter
+
+Out[92]:
+
+√26 + 2√13
+
+In [ ]:
+
+Q.3 Attempt the following.
+(a) Attempt any ONE of the following. [7]
+i. Write a Python program to solve the following LPP:
+Max Z = 3x + 5y + 4z
+subject to 2x + 3y ≤ 8
+2x + 5y ≤ 10
+3x + 2y + 4z ≤ 15
+x, y, z ≥ 0.
+
+In [93]:
+
+from pulp import*
+model=LpProblem(name='Lp-Problem',sense=LpMaximize)
+x=LpVariable(name='x',lowBound=0)
+y=LpVariable(name='y',lowBound=0)
+z=LpVariable(name='z',lowBound=0)
+model+=(2*x+3*y<=8)
+model+=(2*x+5*y<=10)
+model+=(3*x+2*y+4*z<=15)
+model+=3*x+5*y+4*z
+model
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 17/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+Out[93]:
+
+Lp-Problem:
+MAXIMIZE
+3*x + 5*y + 4*z + 0
+SUBJECT TO
+_C1: 2 x + 3 y <= 8
+
+_C2: 2 x + 5 y <= 10
+
+_C3: 3 x + 2 y + 4 z <= 15
+
+VARIABLES
+x Continuous
+y Continuous
+z Continuous
+
+In [94]:
+
+model.solve()
+
+Out[94]:
+
+1
+
+In [95]:
+
+model.objective.value()
+
+Out[95]:
+
+21.0
+
+In [96]:
+
+x.value()
+
+Out[96]:
+
+0.0
+
+In [97]:
+
+y.value()
+
+Out[97]:
+
+2.0
+
+In [98]:
+
+z.value()
+
+Out[98]:
+
+2.75
+
+In [ ]:
+
+ii. Write a Python program to solve the following LPP:
+Min Z = 3x + 5y + 4z
+subject to 2x + 2y ≤ 12
+2x + 2y ≤ 10
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 18/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+5x + 2y ≤ 10
+x ≥ 0, y ≥ 0.
+
+In [99]:
+
+from pulp import*
+model=LpProblem(name='Lp-Problem',sense=LpMinimize)
+x=LpVariable(name='x',lowBound=0)
+y=LpVariable(name='y',lowBound=0)
+z=LpVariable(name='z',lowBound=0)
+model+=(2*x+2*y<=12)
+model+=(2*x+2*y<=10)
+model+=(5*x+2*y<=10)
+model+=3*x+5*y
+model
+
+Out[99]:
+
+Lp-Problem:
+MINIMIZE
+3*x + 5*y + 0
+SUBJECT TO
+_C1: 2 x + 2 y <= 12
+
+_C2: 2 x + 2 y <= 10
+
+_C3: 5 x + 2 y <= 10
+
+VARIABLES
+x Continuous
+y Continuous
+
+In [100]:
+
+model.solve()
+
+Out[100]:
+
+1
+
+In [101]:
+
+model.objective.value()
+
+Out[101]:
+
+0.0
+
+In [102]:
+
+x.value()
+
+Out[102]:
+
+0.0
+
+In [103]:
+
+y.value()
+
+Out[103]:
+
+0.0
+
+In [ ]:
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 19/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+(b) Attempt any ONE of the following. [8]
+i. Write the Python program to apply each of the following transformation on the point 
+P =[3, −1].
+I. Reflection through X axis.
+II. Rotation about origin by an angle 30 degrees.
+III. Scaling in Y coordinate by factor 8.
+IV. Shearing in X direction by 2 units.
+
+In [104]:
+
+P=Point(3,-1)
+
+In [105]:
+
+P.transform(Matrix([[1,0,0],[0,-1,0],[0,0,1]]))
+
+Out[105]:
+
+Point2D(3, 1)
+
+In [106]:
+
+P.rotate(pi/6)
+
+Out[106]:
+
+1 3√3 3 √3
+Point2D( + , − )
+
+2 2 2 2
+
+In [107]:
+
+P.scale(0,8)
+
+Out[107]:
+
+Point2D(0, −8)
+
+In [108]:
+
+P.transform(Matrix([[1,0,0],[2,1,0],[0,0,1]]))
+
+Out[108]:
+
+Point2D(1, −1)
+
+In [ ]:
+
+ii. Write a Python program to apply each of the following transformations on the point P[−2, 4]
+I. Reflection through the line y = x + 2.
+II. Scaling in Y -coordinate by factor 2.
+III. Shearing in X direction by 4 units.
+IV. Rotation about origin by an angle 60 degrees.
+
+In [109]:
+
+P=Point(-2,4)
+
+In [110]:
+
+x,y=symbols('x,y')
+P.reflect(Line(x-y+2))
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 20/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+Out[110]:
+
+Point2D(2, 0)
+
+In [111]:
+
+P.scale(0,2)
+
+Out[111]:
+
+Point2D(0, 8)
+
+In [112]:
+
+P.transform(Matrix([[1,0,0],[4,1,0],[0,0,1]]))
+
+Out[112]:
+
+Point2D(14, 4)
+
+In [113]:
+
+P.rotate(pi/3)
+
+Out[113]:
+
+Point2D(−2√3 − 1, 2 − √3)
+
+In [ ]:
+
+ 
+
+In [ ]:
+
+Q.1 Attempt any TWO of the following. [10]
+(a) Write a Python program to plot 3D graph of the function f(x) = e^(−x^2)
+in [−5, 5] with green dashed points line with upward pointing triangle.
+
+In [116]:
+
+import matplotlib.pyplot as plt
+import numpy as np
+x=np.linspace(-5,5)
+y=np.exp(-x**2)
+plt.plot(x,y,'-.^g')
+plt.xlabel('X-axis')
+plt.ylabel('Y-axis')
+plt.title('graph of function $e^(-x^2)$')
+legend()
+plt.show()
+
+No artists with labels found to put in legend.  Note that artists whose label 
+start with an underscore are ignored when legend() is called with no argumen
+t.
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 21/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+In [ ]:
+
+(b) Write the Python program to plot the graph of the function, using def()
+f(x) = x^2 + 4     if −10 ≤ x < 5
+     = 3x + 9      if 5 ≤ x < 10
+
+In [121]:
+
+import matplotlib.pyplot as plt
+import numpy as np
+def f(x):
+    if x>=-10 and x<5:
+        return x**2+4
+    elif x>=5 and x<10:
+        return 3*x+9
+    else:
+        return None
+x=np.arange(-10,10.1,0.1)
+y=np.array([f(xi) for xi in x])
+plt.plot(x,y)
+show()
+
+In [ ]:
+
+(c) Write a Python program to plot graph of the function f(x) = log(3x^2),
+in [1, 10] with black dashed points.
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 22/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+In [124]:
+
+import matplotlib.pyplot as plt
+import numpy as np
+x=np.linspace(1,10)
+y=np.log(3*x**2)
+plt.plot(x,y,'-.k')
+plt.xlabel('X-axis')
+plt.ylabel('Y-axis')
+plt.title('graph of function $log(3x^2)$')
+plt.show()
+
+In [ ]:
+
+Q.2 Attempt any TWO of the following. [10]
+(a) Write a python program to plot triangle with vertices [3, 3], [5, 6], [5, 2], and
+its rotation about the origin by angle −π radians.
+
+In [125]:
+
+T=Triangle(Point(3,3),Point(5,6),Point(5,2))
+T.rotate(-pi)
+
+Out[125]:
+
+In [ ]:
+
+(b) Write a Python program to generate vector x in the interval [−22, 22] using numpy package w
+80 subintervals.
+
+In [127]:
+
+import numpy as np
+x=np.linspace(-22,22,80)
+x
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 23/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+Out[127]:
+
+array([-22.        , -21.44303797, -20.88607595, -20.32911392,
+       -19.7721519 , -19.21518987, -18.65822785, -18.10126582,
+       -17.5443038 , -16.98734177, -16.43037975, -15.87341772,
+       -15.3164557 , -14.75949367, -14.20253165, -13.64556962,
+       -13.08860759, -12.53164557, -11.97468354, -11.41772152,
+       -10.86075949, -10.30379747,  -9.74683544,  -9.18987342,
+        -8.63291139,  -8.07594937,  -7.51898734,  -6.96202532,
+        -6.40506329,  -5.84810127,  -5.29113924,  -4.73417722,
+        -4.17721519,  -3.62025316,  -3.06329114,  -2.50632911,
+        -1.94936709,  -1.39240506,  -0.83544304,  -0.27848101,
+         0.27848101,   0.83544304,   1.39240506,   1.94936709,
+         2.50632911,   3.06329114,   3.62025316,   4.17721519,
+         4.73417722,   5.29113924,   5.84810127,   6.40506329,
+         6.96202532,   7.51898734,   8.07594937,   8.63291139,
+         9.18987342,   9.74683544,  10.30379747,  10.86075949,
+        11.41772152,  11.97468354,  12.53164557,  13.08860759,
+        13.64556962,  14.20253165,  14.75949367,  15.3164557 ,
+        15.87341772,  16.43037975,  16.98734177,  17.5443038 ,
+        18.10126582,  18.65822785,  19.21518987,  19.7721519 ,
+        20.32911392,  20.88607595,  21.44303797,  22.        ])
+
+In [ ]:
+
+(c) Write a Python program to draw a polygon with vertices (0, 0),(1, 0),(2, 2),(1, 4). Also fi
+and perimeter of the polygon.
+
+In [128]:
+
+P=Polygon((0,0),(1,0),(2,2),(1,4))
+P
+
+Out[128]:
+
+In [130]:
+
+P.area
+
+Out[130]:
+
+4
+
+In [131]:
+
+P.perimeter
+
+Out[131]:
+
+1 + √17 + 2√5
+
+In [ ]:
+
+Q.3 Attempt the following.
+(a) Attempt any ONE of the following. [7]
+i. Write a Python program to solve the following LPP:
+Min Z = 3.5x + 2y
+subject to x + y ≥ 5
+x ≥ 4
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 24/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+y ≤ 2
+x ≥ 0, y ≥ 0.
+
+In [132]:
+
+from pulp import*
+model=LpProblem(name='Lp-Problem',sense=LpMinimize)
+x=LpVariable(name='x',lowBound=0)
+y=LpVariable(name='y',lowBound=0)
+model+=(x+y>=5)
+model+=(x>=4)
+model+=(y<=2)
+model+=3.5*x+2*y
+model
+
+Out[132]:
+
+Lp-Problem:
+MINIMIZE
+3.5*x + 2*y + 0.0
+SUBJECT TO
+_C1: x + y >= 5
+
+_C2: x >= 4
+
+_C3: y <= 2
+
+VARIABLES
+x Continuous
+y Continuous
+
+In [133]:
+
+model.solve()
+
+Out[133]:
+
+1
+
+In [134]:
+
+model.objective.value()
+
+Out[134]:
+
+16.0
+
+In [135]:
+
+x.value()
+
+Out[135]:
+
+4.0
+
+In [136]:
+
+y.value()
+
+Out[136]:
+
+1.0
+
+In [ ]:
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 25/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+ii. Write a Python program to solve the following LPP:
+Min Z = x + y
+subject to x ≥ 6
+y ≥ 6
+x + y ≤ 11
+x ≥ 0, y ≥ 0.
+
+In [137]:
+
+from pulp import*
+model=LpProblem(name='Lp-Problem',sense=LpMinimize)
+x=LpVariable(name='x',lowBound=0)
+y=LpVariable(name='y',lowBound=0)
+model+=(x>=6)
+model+=(y>=6)
+model+=(x+y<=11)
+model+=x+y
+model
+
+Out[137]:
+
+Lp-Problem:
+MINIMIZE
+1*x + 1*y + 0
+SUBJECT TO
+_C1: x >= 6
+
+_C2: y >= 6
+
+_C3: x + y <= 11
+
+VARIABLES
+x Continuous
+y Continuous
+
+In [138]:
+
+model.solve()
+
+Out[138]:
+
+-1
+
+In [ ]:
+
+(b) Attempt any ONE of the following. [8]
+i. Apply Python program in each of the following transformations on the point P[3, −1]
+I. Refection through X−axis.
+II. Scaling in X−coordinate by factor 2.
+III. Scaling in Y−coordinate by factor 1.5.
+IV. Reflection through the line y = x.
+
+In [139]:
+
+P=Point(3,-1)
+
+In [140]:
+
+P.transform(Matrix([[1,0,0],[0,-1,0],[0,0,1]]))
+
+Out[140]:
+
+Point2D(3, 1)
+
+In [141]:
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 26/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+P.scale(2,0)
+
+Out[141]:
+
+Point2D(6, 0)
+
+In [142]:
+
+P.scale(0,1.5)
+
+Out[142]:
+
+3
+Point2D(0, − )
+
+2
+
+In [143]:
+
+P.transform(Matrix([[0,1,0],[1,0,0],[0,0,1]]))
+
+Out[143]:
+
+Point2D(−1, 3)
+
+In [ ]:
+
+ii. Find the combined transformation of the line segment between the points A[4, −1] & B[3, 0]
+by using Python program for the following sequence of transformations:-
+I. Rotation about origin through an angle π.
+II. Shearing in Y direction by 4.5 units.
+III. Scaling in X− coordinate by 3 units.
+IV. Reflection through the line y = x.
+
+In [144]:
+
+A=Point(4,-1)
+B=Point(3,0)
+S=Segment(A,B)
+S.rotate(pi)
+points=S.points
+p=points[0]
+q=points[1]
+p1=p.transform(Matrix([[1,4.5,0],[0,1,0],[0,0,1]]))
+q1=q.transform(Matrix([[1,4.5,0],[0,1,0],[0,0,1]]))
+Segment(p1,q1)
+S.scale(3,0)
+p1=p.transform(Matrix([[0,1,0],[1,0,0],[0,0,1]]))
+q1=q.transform(Matrix([[0,1,0],[1,0,0],[0,0,1]]))
+Segment(p1,q1)
+
+Out[144]:
+
+In [ ]:
+
+ 
+
+In [ ]:
+
+Q.1 Attempt any TWO of the following. [10]
+(a) Write a Python program to generate 3D plot of the functions z = sin x + cos y in −10 < x, y
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 27/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+In [147]:
+
+from pylab import*
+import numpy as np
+def f(x,y):
+    return np.sin(x)+np.cos(y)
+x=np.linspace(-10,10)
+y=np.linspace(-10,10)
+X,Y=np.meshgrid(x,y)
+Z=f(X,Y)
+ax=axes(projection='3d')
+ax.contour3D(X,Y,Z,50)
+xlabel('x-axis')
+ylabel('y-axis')
+show()
+
+In [ ]:
+
+(b) Using Python plot the graph of function f(x) = sin^−1(x) on the interval [−1, 1].
+
+In [148]:
+
+import matplotlib.pyplot as plt
+import numpy as np
+x=np.linspace(-1,1)
+f=np.sin(x)**-1
+plt.plot(x,f)
+plt.show()
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 28/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+In [ ]:
+
+(c) Using Python plot the surface plot of function z = cos(x^2 + y^2 − 0.5)
+in the interval from −1 <x, y < 1.
+
+In [150]:
+
+from pylab import*
+import numpy as np
+def f(x,y):
+    return np.cos(x**2+y**2-0.5)
+x=np.linspace(-1,1)
+y=np.linspace(-1,1)
+X,Y=np.meshgrid(x,y)
+Z=f(X,Y)
+ax=axes(projection='3d')
+ax.plot_surface(X,Y,Z)
+xlabel('x-axis')
+ylabel('y-axis')
+show()
+
+In [ ]:
+
+Q.2 Attempt any TWO of the following. [10]
+(a) Rotate the line segment by 180◦ having end points (1, 0) and (2, −1).
+
+In [151]:
+
+S=Segment(Point(1,0),Point(2,-1))
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 29/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+S.rotate(pi)
+
+Out[151]:
+
+In [ ]:
+
+(b) Using sympy, declare the points P(5, 2), Q(5, −2), R(5, 0), check whether these points are 
+Declare the ray passing through the points P and Q, find the length of this ray between P and Q
+Also find slope of this ray.
+
+In [155]:
+
+P=Point(5,2)
+Q=Point(5,-2)
+R=Point(5,0)
+Point.is_collinear(P,Q,R)
+
+Out[155]:
+
+True
+
+In [156]:
+
+R=Ray(P,Q)
+
+In [157]:
+
+R.length
+
+Out[157]:
+
+∞
+
+In [160]:
+
+R.slope
+
+Out[160]:
+
+∞
+
+In [ ]:
+
+(c) Generate triangle with vertices (0, 0),(4, 0),(1, 4), check whether the triangle is Scalene
+
+In [163]:
+
+T=Triangle(Point(0,0),Point(4,0),Point(1,4))
+T.is_scalene()
+
+Out[163]:
+
+True
+
+In [ ]:
+
+Q.3 Attempt the following.
+(a) Attempt any ONE of the following. [7]
+i. Write a Python program to solve the following LPP:
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 30/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+Max Z = 150x + 75y
+subject to 4x + 6y ≤ 24
+5x + 3y ≤ 15
+x ≥ 0, y ≥ 0.
+
+In [164]:
+
+from pulp import*
+model=LpProblem(name='Lp-Problem',sense=LpMaximize)
+x=LpVariable(name='x',lowBound=0)
+y=LpVariable(name='y',lowBound=0)
+model+=(4*x+6*y<=24)
+model+=(5*x+3*y<=15)
+model+=150*x+75*y
+model
+
+Out[164]:
+
+Lp-Problem:
+MAXIMIZE
+150*x + 75*y + 0
+SUBJECT TO
+_C1: 4 x + 6 y <= 24
+
+_C2: 5 x + 3 y <= 15
+
+VARIABLES
+x Continuous
+y Continuous
+
+In [165]:
+
+model.solve()
+
+Out[165]:
+
+1
+
+In [166]:
+
+model.objective.value()
+
+Out[166]:
+
+450.0
+
+In [167]:
+
+x.value()
+
+Out[167]:
+
+3.0
+
+In [168]:
+
+y.value()
+
+Out[168]:
+
+0.0
+
+In [ ]:
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 31/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+ii. Write a Python program to solve the following LPP:
+Max Z = 4x + y + 3z + 5w
+subject to 4x + 6y − 5z − 4w ≥ 20
+−3x − 2y + 4z + w ≤ 10
+−8x − 3y + 3z + 2w ≤ 20
+x ≥ 0, y ≥ 0, z ≥ 0, w ≥ 0.
+
+In [169]:
+
+from pulp import*
+model=LpProblem(name='Lp-Problem',sense=LpMaximize)
+x=LpVariable(name='x',lowBound=0)
+y=LpVariable(name='y',lowBound=0)
+z=LpVariable(name='z',lowBound=0)
+w=LpVariable(name='w',lowBound=0)
+model+=(4*x+6*y-5*z-4*w>=20)
+model+=(-3*x-2*y+4*z+w<=10)
+model+=(-8*x-3*y+3*z+2*w<=20)
+model+=4*x+y+3*z+5*w
+model
+
+Out[169]:
+
+Lp-Problem:
+MAXIMIZE
+5*w + 4*x + 1*y + 3*z + 0
+SUBJECT TO
+_C1: - 4 w + 4 x + 6 y - 5 z >= 20
+
+_C2: w - 3 x - 2 y + 4 z <= 10
+
+_C3: 2 w - 8 x - 3 y + 3 z <= 20
+
+VARIABLES
+w Continuous
+x Continuous
+y Continuous
+z Continuous
+
+In [170]:
+
+model.solve()
+
+Out[170]:
+
+-2
+
+In [ ]:
+
+(b) Attempt any ONE of the following. [8]
+i. Write a python program to apply the following transformations on the point (−2, 4) :
+I. Refection through X−axis.
+II. Scaling in X−coordinate by factor 6.
+III. Shearing in X direction by 4 units.
+IV. Rotate about origin through an angle 30◦
+
+In [171]:
+
+A=Point(-2,4)
+
+In [172]:
+
+A.transform(Matrix([[1,0,0],[0,-1,0],[0,0,1]]))
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 32/33
+
+
+
+4/14/24, 8:09 PM slips 21-25 slides
+
+Out[172]:
+
+Point2D(−2, −4)
+
+In [173]:
+
+A.scale(6,0)
+
+Out[173]:
+
+Point2D(−12, 0)
+
+In [174]:
+
+A.transform(Matrix([[1,0,0],[4,1,0],[0,0,1]]))
+
+Out[174]:
+
+Point2D(14, 4)
+
+In [175]:
+
+A.rotate(pi/6)
+
+Out[175]:
+
+46650635094611 9856406460551
+Point2D(− , )
+
+12500000000000 4000000000000
+
+In [ ]:
+
+ii. Write a python program to find the combined transformation of the line segment between the
+points A[3, 2] & B[2, −3] for the following sequence of transformations:-
+I. Rotation about origin through an angle π/6
+II. Scaling in Y−coordinate by −4 units.
+III. Uniform scaling by −6.4 units.
+IV. Shearing in Y direction by 5 units.
+
+In [176]:
+
+A=Point(3,2)
+B=Point(2,-3)
+S=Segment(A,B)
+A.rotate(pi/6)
+A.scale(0,-4)
+A.scale(-6.4,-6.4)
+points=S.points
+p=points[0]
+q=points[1]
+p1=p.transform(Matrix([[1,5,0],[0,1,0],[0,0,1]]))
+q1=q.transform(Matrix([[1,5,0],[0,1,0],[0,0,1]]))
+Segment(p1,q1)
+
+Out[176]:
+
+file:///C:/Users/siddhi/Downloads/slips 21-25.slides (1).html#/ 33/33
